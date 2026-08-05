@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ASRS Dashboard</title>
+
+https://cdn.jsdelivr.net/npm/chart.js
+https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.jsscript>
+
+<style>
+
+body{
+font-family:Segoe UI;
+background:white;
+padding:20px;
+}
+
+h1{
+color:#1565C0;
+}
+
+.card{
+background:#F8FBFF;
+border:1px solid #E3F2FD;
+padding:15px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>ASRS Dashboard</h1>
+
+<input
+type="file"
+id="excelUpload"
+accept=".xlsx,.xls">
+
+<br><br>
+
+<select id="workTypeFilter">
+<option value="All">All</option>
+<option value="Storage">Storage</option>
+<option value="Full Retrieval (Main out)">
+Full Retrieval (Main out)
+</option>
+</select>
+
+<div class="card">
+
+<h3>Total Pallet</h3>
+
+<h2 id="totalPallet">0</h2>
+
+</div>
+
+<canvas id="hourChart"></canvas>
+
+<script>
+
+let chart;
+
+document
+.getElementById('excelUpload')
+.addEventListener('change',function(e){
+
+const file=e.target.files[0];
+
+const reader=new FileReader();
+
+reader.onload=function(evt){
+
+const workbook=
+XLSX.read(evt.target.result,{
+type:'binary'
+});
+
+const sheet=
+workbook.Sheets[
+workbook.SheetNames[0]
+];
+
+const data=
+XLSX.utils.sheet_to_json(sheet);
+
+buildDashboard(data);
+
+};
+
+reader.readAsBinaryString(file);
+
+});
+
+function buildDashboard(data){
+
+document
+.getElementById('totalPallet')
+.innerText=data.length;
+
+const hourMap={};
+
+data.forEach(r=>{
+
+let dt=
+new Date(
+r["Registration Date/Time"]
+);
+
+let h=
+dt.getHours();
+
+if(!hourMap[h])
+hourMap[h]=0;
+
+hourMap[h]++;
+
+});
+
+const labels=
+Object.keys(hourMap);
+
+const values=
+Object.values(hourMap);
+
+if(chart)
+chart.destroy();
+
+chart=
+new Chart(
+document.getElementById("hourChart"),
+{
+type:'bar',
+
+data:{
+labels:labels,
+datasets:[{
+label:'Pallet Count',
+data:values,
+backgroundColor:'#42A5F5'
+}]
+}
+});
+
+}
+
+</script>
+
+</body>
+</html>
