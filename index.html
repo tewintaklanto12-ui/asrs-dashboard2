@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>ASRS Dashboard</title>
 
-://cdn.jsdelivr.net/npm/chart.js"></script>
+https://cdn.jsdelivr.net/npm/chart.jsscript>
 
 </head>
 
@@ -16,16 +16,17 @@
 
 <script>
 
-const ctx = document.getElementById('myChart');
+const ctx =
+document.getElementById("myChart");
 
 new Chart(ctx,{
-    type:'bar',
+    type:"bar",
     data:{
-        labels:['20','21','22','23'],
+        labels:["20","21","22","23"],
         datasets:[{
-            label:'Result Qty',
+            label:"Result Qty",
             data:[120,150,180,200],
-            backgroundColor:'#1565C0'
+            backgroundColor:"#1565C0"
         }]
     }
 });
