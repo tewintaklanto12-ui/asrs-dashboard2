@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>ASRS Dashboard</title>
 
-https://cdn.jsdelivr.net/npm/chart.js
+<script src.jsdelivr.net/npm/chart.js
 
 </head>
 
@@ -16,3 +13,24 @@ https://cdn.jsdelivr.net/npm/chart.js
 <h1>ASRS Dashboard</h1>
 
 <canvas id="myChart"></canvas>
+
+<script>
+
+const ctx = document.getElementById('myChart');
+
+new Chart(ctx,{
+    type:'bar',
+    data:{
+        labels:['20','21','22','23'],
+        datasets:[{
+            label:'Result Qty',
+            data:[120,150,180,200],
+            backgroundColor:'#1565C0'
+        }]
+    }
+});
+
+</script>
+
+</body>
+</html>
